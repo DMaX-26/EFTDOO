@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.bibliotecaescolar.vista.PanelPrincipal">
+  <grid id="27dc6" binding="PanelGestion" layout-manager="GridLayoutManager" row-count="7" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="20" left="20" bottom="20" right="20"/>
+    <constraints>
+      <xy x="20" y="20" width="500" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <component id="808f" class="javax.swing.JLabel" binding="lblTitulo">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="1" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Gestión Biblioteca Escolar"/>
+        </properties>
+      </component>
+      <component id="d2a04" class="javax.swing.JButton" binding="btnGestionLibros">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Gestión de Libros"/>
+        </properties>
+      </component>
+      <component id="4765f" class="javax.swing.JButton" binding="btnGestionEstudiantes">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Gestión de Estudiantes"/>
+        </properties>
+      </component>
+      <component id="ff979" class="javax.swing.JButton" binding="btnPrestamos">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Gestión Préstamos y Devoluciones"/>
+        </properties>
+      </component>
+      <component id="1d3a2" class="javax.swing.JButton" binding="btnReportes">
+        <constraints>
+          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Reportes"/>
+        </properties>
+      </component>
+      <component id="c1bfe" class="javax.swing.JButton" binding="btnSalir">
+        <constraints>
+          <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Salir"/>
+        </properties>
+      </component>
+      <component id="10a49" class="javax.swing.JButton" binding="btnGestionCategorias">
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Gestión de Categorías"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>
