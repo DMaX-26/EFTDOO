@@ -9,6 +9,7 @@ import com.bibliotecaescolar.modelo.Prestamo;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -71,9 +72,6 @@ public class Reportes extends JFrame {
             modelo.addColumn("Stock");
 
             for (Libro libro : libros) {
-                /**
-                 * Se agregan los datos obtenidos al modelo
-                 */
                 modelo.addRow(new Object[]{
                         libro.getId(),
                         libro.getTitulo(),
@@ -167,7 +165,7 @@ public class Reportes extends JFrame {
             /**
              * Mediante el controlador se obtiene los libros mas prestados
              */
-            java.sql.ResultSet rs = controladorPrestamos.librosMasPrestados();
+            ResultSet rs = controladorPrestamos.librosMasPrestados();
 
             /**
              * Modelo que muestra los datos de la tabla
@@ -183,7 +181,9 @@ public class Reportes extends JFrame {
             modelo.addColumn("Total préstamos");
 
             while (rs.next()) {
-
+                /**
+                 * Se agregan los datos obtenidos al modelo
+                 */
                 modelo.addRow(new Object[]{
                         rs.getInt("id"),
                         rs.getString("titulo"),
