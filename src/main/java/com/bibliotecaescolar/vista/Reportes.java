@@ -2,8 +2,10 @@ package com.bibliotecaescolar.vista;
 
 import com.bibliotecaescolar.controlador.ControladorLibros;
 import com.bibliotecaescolar.controlador.ControladorPrestamos;
+import com.bibliotecaescolar.dao.EstudianteDAO;
 import com.bibliotecaescolar.dao.LibroDAO;
 import com.bibliotecaescolar.dao.PrestamoDAO;
+import com.bibliotecaescolar.modelo.Estudiante;
 import com.bibliotecaescolar.modelo.Libro;
 import com.bibliotecaescolar.modelo.Prestamo;
 
@@ -24,14 +26,17 @@ public class Reportes extends JFrame {
     private JButton btnSalir;
     private JButton btnLibrosMasPrestados;
     private JButton btnAtrasados;
+    private JComboBox cmbEstudiantes;
+    private JButton btnBuscarHistorial;
 
     private ControladorLibros controladorLibros;
     private ControladorPrestamos controladorPrestamos;
+    private EstudianteDAO estudianteDAO;
 
     public Reportes() {
         setTitle("Gestión de Reportes");
         setContentPane(general);
-        setSize(900, 500);
+        setSize(930, 500);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -39,11 +44,15 @@ public class Reportes extends JFrame {
         controladorLibros = new ControladorLibros(new LibroDAO());
         controladorPrestamos = new ControladorPrestamos(new PrestamoDAO(new LibroDAO()));
 
+        estudianteDAO = new EstudianteDAO();
+        cargarEstudiantes();
+
         btnLibrosDisponibles.addActionListener(e -> mostrarLibros());
         btnActivos.addActionListener(e -> mostrarPrestamosActivos());
         btnHistorial.addActionListener(e -> mostrarHistorial());
         btnLibrosMasPrestados.addActionListener(e -> mostrarLibrosMasPrestados());
         btnAtrasados.addActionListener(e -> mostrarPrestamosAtrasados());
+        btnBuscarHistorial.addActionListener(e -> buscarHistorialEstudiante());
         btnSalir.addActionListener(e -> dispose());
     }
 
@@ -266,5 +275,80 @@ public class Reportes extends JFrame {
                 p.getFechaDevolucion(),
                 p.isDevuelto() ? "Sí" : "No"
         });
+    }
+
+    /**
+     * Metodo que carga los estudiantes registrados en la lista.
+     */
+    private void cargarEstudiantes() {
+        try {
+            /**
+             * El DAO obtiene el metodo que lee todos los estudiantes registrados en la BD y se guardan en una lista
+             */
+            List<Estudiante> estudiantes = estudianteDAO.readAll();
+
+            cmbEstudiantes.removeAllItems();
+
+            /**
+             * Se recorre la lista
+             */
+            for (Estudiante estudiante : estudiantes) {
+                /**
+                 * Se añaden todos los estudiantes encontrados a la lista
+                 */
+                cmbEstudiantes.addItem(estudiante);
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar estudiantes: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Muestra el historial del estudiante seleccionado.
+     */
+    private void buscarHistorialEstudiante() {
+        /**
+         * Se obtiene el estudiante seleccionado del combobox
+         */
+        Estudiante estudiante = (Estudiante) cmbEstudiantes.getSelectedItem();
+
+        if (estudiante == null) {
+            JOptionPane.showMessageDialog(this, "Selecciona un estudiante.");
+            return;
+        }
+
+        try {
+            /**
+             * Mediante el DAO se obtiene la lista de prestamos y se guarda en una lista
+             */
+            List<Prestamo> prestamos = controladorPrestamos.listarPrestamos();
+            /**
+             * Se crea el modelo que muestra los datos en la tabla
+             */
+            DefaultTableModel modelo = crearModeloPrestamos();
+
+            /**
+             * Se recorre la lista
+             */
+            for (Prestamo p : prestamos) {
+                /**
+                 * Si el "id" del estudiante asociado a un prestamo coincide con el "id" del estudiante seleccionado del combobox
+                 */
+                if (p.getEstudiante().getId() == estudiante.getId()) {
+                    /**
+                     * Se agrega el prestamo a la tabla
+                     */
+                    agregarPrestamo(modelo, p);
+                }
+            }
+            /**
+             * Se agrega el modelo a la tabla
+             */
+            tblReportes.setModel(modelo);
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error al buscar el historial: " + e.getMessage());
+        }
     }
 }

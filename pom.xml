@@ -15,11 +15,12 @@
     </properties>
 
     <dependencies>
-        <!-- Driver JDBC de MySQL: permite que DriverManager reconozca URLs jdbc:mysql:// -->
+        <!-- Driver JDBC de MySQL: permite a Java conectarse a la base de datos -->
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
-            <version>8.4.0</version>
+            <!-- Usa la versión más reciente que te sugiera IntelliJ o Maven Central -->
+            <version>9.0.0</version>
         </dependency>
     </dependencies>
 
